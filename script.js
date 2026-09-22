@@ -61,16 +61,9 @@ function addTask() {
     renderTasks();
 
     taskInput.value = '';
-    taskInput.focus();
 }
 
 addButton.addEventListener('click', addTask);
-
-taskInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-        addTask();
-    }
-});
 
 function deleteTask(id) {
     tasks = tasks.filter(function (task) {
