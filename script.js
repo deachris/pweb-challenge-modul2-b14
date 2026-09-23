@@ -109,8 +109,12 @@ function renderTasks() {
         span.style.cursor = 'pointer';
 
         if (task.completed) {
-            span.style.textDecoration = 'line-through';
+            span.classList.add('completed')
         }
+
+        span.addEventListener('click', function () {
+            toggleComplete(task.id);
+        });
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Hapus';
