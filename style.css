@@ -75,6 +75,10 @@ body {
     background-color: rgb(45, 28, 0);
 }
 
+.completed {
+    text-decoration: line-through;
+}
+
 #taskList {
     list-style: none;
     padding: 0;
