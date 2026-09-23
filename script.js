@@ -16,7 +16,7 @@ function saveTasks() {
     localStorage.setItem('todo_data', JSON.stringify(tasks));
 }
 
-// 3. Logika Filter (Event Listener untuk tombol)
+// 3. Logika Filter (addEventListener)
 const btnAll = document.getElementById('btnAll');
 const btnActive = document.getElementById('btnActive');
 const btnCompleted = document.getElementById('btnCompleted');
@@ -127,9 +127,6 @@ function renderTasks() {
         taskList.appendChild(li);
     });
 }
-
-// ==========================================
 // INISIALISASI AWAL 
-// ==========================================
 loadTasks();
 renderTasks();
