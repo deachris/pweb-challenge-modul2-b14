@@ -78,10 +78,6 @@ body {
     color: black;
 }
 
-.completed {
-    text-decoration: line-through;
-}
-
 #taskList {
     list-style: none;
     padding: 0;
