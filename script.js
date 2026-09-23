@@ -104,12 +104,13 @@ function renderTasks() {
 
         const span = document.createElement('span');
         span.textContent = task.text;
+
+        span.style.flex = '1';
+        span.style.cursor = 'pointer';
+
         if (task.completed) {
-            span.classList.add('completed');
+            span.style.textDecoration = 'line-through';
         }
-        span.addEventListener('click', function () {
-            toggleComplete(task.id);
-        });
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Hapus';
