@@ -1,20 +1,72 @@
-type TaskFilter = "all" | "active" | "completed";
-let currentFilter: TaskFilter = "active";
+import type { Task } from "./task";
 
-function taskFilter(filter: TaskFilter) {
-    if (filter === "all") {
-        console.log("Tampilan semua task");
+type TaskStatus = "all" | "active" | "done";
+
+function isTaskStatus(status: string | undefined): status is TaskStatus {
+    return status === "all" || status === "active" || status === "done";
+}
+
+const tasks: Task[] = [
+    {
+        id: 1,
+        title: "Belajar TypeScript",
+        completed: false,
+        priority: "high",
+    },
+    {
+        id: 2,
+        title: "Mengerjakan latihan list",
+        completed: true,
+        priority: "medium",
+    },
+];
+
+function listTasks(status: TaskStatus) {
+    const filteredTasks = tasks.filter((task) => {
+        if (status === "done") {
+            return task.completed;
+        }
+
+        if (status === "active") {
+            return !task.completed;
+        }
+
+        return true;
+    });
+
+    if (filteredTasks.length === 0) {
+        console.log(`Tidak ada task dengan status ${status}.`);
+        return;
     }
-    else if (filter === "active") {
-        console.log("Tampilan task aktif");
-    }
-    else if (filter === "completed") {
-        console.log("Tampilan task selesai");
-    }
-    else {
-        console.log("Filter tidak tersedia");
+
+    for (const task of filteredTasks) {
+        const taskStatus = task.completed ? "done" : "active";
+        console.log(`${task.id}. ${task.title} [${taskStatus}] - priority: ${task.priority}`);
     }
 }
 
-currentFilter = "completed";
-taskFilter(currentFilter);
+function run(args: string[]) {
+    const [command, ...options] = args;
+
+    if (command !== "list") {
+        console.error("Penggunaan: npm start -- list [--status all|active|done]");
+        process.exitCode = 1;
+        return;
+    }
+
+    const statusOptionIndex = options.indexOf("--status");
+    const statusValue = statusOptionIndex === -1 ? "all" : options[statusOptionIndex + 1];
+
+    if (
+        (statusOptionIndex !== -1 && statusValue === undefined) ||
+        !isTaskStatus(statusValue)
+    ) {
+        console.error("Status harus salah satu dari: all, active, done.");
+        process.exitCode = 1;
+        return;
+    }
+
+    listTasks(statusValue);
+}
+
+run(process.argv.slice(2));
